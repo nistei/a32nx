@@ -9,6 +9,7 @@
 /A32NX/build_info.json
 /A32NX/html_ui/Pages/VCockpit/Instruments/generated
 /A32NX/ModelBehaviorDefs/A32NX/generated
+/A32NX/SimObjects/AirPlanes/Asobo_A320_NEO/panel/*.wasm
 !/docs/**
 !/src/**
 !/scripts/**
@@ -39,3 +40,6 @@ node_modules
 /src/systems/target/
 !igniter.config.mjs
 .igniter
+/src/fdr2csv/*.exe
+/src/fbw/obj/
+/src/fdr2csv/build/
