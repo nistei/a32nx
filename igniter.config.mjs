@@ -9,6 +9,9 @@ export default new TaskOfTasks('a32nx', [
             'cargo build --target wasm32-wasi --release',
             'cp target/wasm32-wasi/release/systems.wasm A32NX/SimObjects/AirPlanes/Asobo_A320_NEO/panel/'
         ]),
+        new ExecTask('fbw', [
+            'cd src/fbw && bash build.sh'
+        ]),
     ], true),
 
     new TaskOfTasks('dist', [
