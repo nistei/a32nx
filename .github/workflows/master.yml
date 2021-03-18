@@ -17,11 +17,19 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: './node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('./package.json') }}
+      - uses: actions/cache@v2
+        with:
+          path: './target'
+          key: ${{ runner.os }}-modules-${{ hashFiles('./Cargo.lock') }}
       - name: Set BUILT_DATE_TIME
         run: echo "BUILT_DATE_TIME=$(date -u -Iseconds)" >> $GITHUB_ENV
       - name: Build A32NX
         run: |
-          ./scripts/dev-env/run.sh ./scripts/setup.sh
+          ./scripts/dev-env/run.sh npm install --no-optional --legacy-peer-deps
           ./scripts/dev-env/run.sh ./scripts/build.sh --no-tty
       - name: Build ZIP files
         run: |

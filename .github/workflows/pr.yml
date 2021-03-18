@@ -14,22 +14,34 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: './node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('./package.json') }}
+      - uses: actions/cache@v2
+        with:
+          path: './target'
+          key: ${{ runner.os }}-modules-${{ hashFiles('./Cargo.lock') }}
       - name: install
-        run: npm install --no-optional
+        run: ./scripts/dev-env/run.sh npm install --no-optional --legacy-peer-deps
       - name: npm run lint
         run: ./scripts/dev-env/run.sh npm run lint
       - name: lint-rust.sh
-        run: |
-          docker run --rm -v "$(pwd)":/external ghcr.io/flybywiresim/dev-env@sha256:0bf0844b914cbd45a8a0a866a71c7a07fa09308f48cb961708be479f0d63aa0f scripts/lint-rust.sh
+        run: ./scripts/dev-env/run.sh scripts/lint-rust.sh
+
   test:
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: './target'
+          key: ${{ runner.os }}-modules-${{ hashFiles('./Cargo.lock') }}
       - name: test-rust.sh
-        run: |
-          docker run --rm -v "$(pwd)":/external ghcr.io/flybywiresim/dev-env@sha256:0bf0844b914cbd45a8a0a866a71c7a07fa09308f48cb961708be479f0d63aa0f scripts/test-rust.sh
+        run: ./scripts/dev-env/run.sh scripts/test-rust.sh
+
   build:
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
@@ -39,9 +51,17 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: './node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('./package.json') }}
+      - uses: actions/cache@v2
+        with:
+          path: './target'
+          key: ${{ runner.os }}-modules-${{ hashFiles('./Cargo.lock') }}
       - name: Build A32NX
         run: |
-          ./scripts/dev-env/run.sh ./scripts/setup.sh
+          ./scripts/dev-env/run.sh npm install --no-optional --legacy-peer-deps
           ./scripts/dev-env/run.sh ./scripts/build.sh --no-tty
       - name: Generate ZIP file
         run: |
