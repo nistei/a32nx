@@ -131,6 +131,7 @@ class FlyByWireInterface {
   ID idFmgcAccelerationAltitudeGoAroundEngineOut;
   ID idFmgcCruiseAltitude;
   ID idFmgcFlexTemperature;
+  ID idFmgcDirToTrigger;
 
   ID idAutothrustN1_TLA_1;
   ID idAutothrustN1_TLA_2;

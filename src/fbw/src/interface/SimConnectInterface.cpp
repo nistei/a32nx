@@ -204,6 +204,7 @@ bool SimConnectInterface::prepareSimInputSimConnectDataDefinitions(bool autopilo
   result &= addInputDataDefinition(hSimConnect, 0, Events::A32NX_FCU_VS_PULL, "A32NX.FCU_VS_PULL", false);
   result &= addInputDataDefinition(hSimConnect, 0, Events::A32NX_FCU_LOC_PUSH, "A32NX.FCU_LOC_PUSH", false);
   result &= addInputDataDefinition(hSimConnect, 0, Events::A32NX_FCU_APPR_PUSH, "A32NX.FCU_APPR_PUSH", false);
+  result &= addInputDataDefinition(hSimConnect, 0, Events::A32NX_FMGC_DIR_TO_TRIGGER, "A32NX.FMGC_DIR_TO_TRIGGER", false);
 
   result &= addInputDataDefinition(hSimConnect, 0, Events::AUTO_THROTTLE_ARM, "AUTO_THROTTLE_ARM", true);
 
@@ -632,6 +633,7 @@ void SimConnectInterface::resetSimInputAutopilot() {
   simInputAutopilot.VS_pull = 0;
   simInputAutopilot.LOC_push = 0;
   simInputAutopilot.APPR_push = 0;
+  simInputAutopilot.DIR_TO_trigger = 0;
 }
 
 void SimConnectInterface::resetSimInputThrottles() {
@@ -834,6 +836,12 @@ void SimConnectInterface::simConnectProcessEvent(const SIMCONNECT_RECV_EVENT* ev
     case Events::A32NX_FCU_APPR_PUSH: {
       simInputAutopilot.APPR_push = 1;
       cout << "WASM: event triggered: A32NX_FCU_APPR_PUSH" << endl;
+      break;
+    }
+
+    case Events::A32NX_FMGC_DIR_TO_TRIGGER: {
+      simInputAutopilot.DIR_TO_trigger = 1;
+      cout << "WASM: event triggered: A32NX_FMGC_DIR_TO_TRIGGER" << endl;
       break;
     }
 

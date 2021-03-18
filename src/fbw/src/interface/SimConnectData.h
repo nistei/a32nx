@@ -125,6 +125,7 @@ struct SimInputAutopilot {
   double VS_pull;
   double LOC_push;
   double APPR_push;
+  double DIR_TO_trigger;
 };
 
 struct SimInputThrottles {

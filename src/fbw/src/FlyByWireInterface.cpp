@@ -378,7 +378,7 @@ bool FlyByWireInterface::updateAutopilotStateMachine(double sampleTime) {
     autopilotStateMachineInput.in.input.FPA_fcu_deg = get_named_variable_value(idFcuSelectedFpa);
     autopilotStateMachineInput.in.input.Psi_fcu_deg = get_named_variable_value(idFcuSelectedHeading);
     autopilotStateMachineInput.in.input.TRK_FPA_mode = get_named_variable_value(idFcuTrkFpaModeActive);
-    autopilotStateMachineInput.in.input.DIR_TO_trigger = 0;
+    autopilotStateMachineInput.in.input.DIR_TO_trigger = simInputAutopilot.DIR_TO_trigger;
     autopilotStateMachineInput.in.input.is_FLX_active = autoThrust.getExternalOutputs().out.data_computed.is_FLX_active;
     autopilotStateMachineInput.in.input.Slew_trigger = wasInSlew;
     autopilotStateMachineInput.in.input.MACH_mode = simData.is_mach_mode_active;
